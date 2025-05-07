@@ -9,7 +9,7 @@ export default function SummaryGenerator() {
   const generateSummary = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('https://your-api-url.com/api/generate-summary', { notes });
+      const res = await axios.post('https://portly.up.railway.app/api/generate-summary', { notes });
       setSummary(res.data.summary);
     } catch (err) {
       alert("Failed to generate summary.");
