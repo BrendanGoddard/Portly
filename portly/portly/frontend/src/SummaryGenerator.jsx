@@ -10,6 +10,7 @@ export default function SummaryGenerator() {
     setLoading(true);
     try {
       const res = await axios.post('https://portly.up.railway.app/api/generate-summary', { notes });
+
       setSummary(res.data.summary);
     } catch (err) {
       alert("Failed to generate summary.");
