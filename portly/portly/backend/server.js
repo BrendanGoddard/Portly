@@ -1,18 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 const app = express();
+
 app.use(bodyParser.json());
 
-const openai = new OpenAIApi(new Configuration({
-  apiKey: 'YOUR_OPENAI_API_KEY'
-}));
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.post('/api/generate-summary', async (req, res) => {
   const { notes } = req.body;
 
   try {
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         { role: "system", content: "You are a project manager summarizing a freelancer’s weekly client update." },
@@ -21,7 +20,7 @@ app.post('/api/generate-summary', async (req, res) => {
       max_tokens: 200
     });
 
-    const summary = response.data.choices[0].message.content.trim();
+    const summary = response.choices[0].message.content.trim();
     res.json({ summary });
 
   } catch (err) {
